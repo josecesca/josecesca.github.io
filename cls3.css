@@ -1,0 +1,37 @@
+/* cls3.css */
+
+/* Estilos de botón */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Estilos de encabezado */
+  .header {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos para dispositivos móviles */
+  @media (max-width: 768px) {
+    .btn {
+      padding: 8px 16px; /* Ajustar el padding para botones en dispositivos móviles */
+    }
+  
+    .header {
+      font-size: 20px; /* Reducir el tamaño del encabezado en dispositivos móviles */
+    }
+  }
+  
