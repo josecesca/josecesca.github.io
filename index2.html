@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+<header>
+    <nav>
+      <div class="logo">
+        <a href="#">MiLogo</a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#services">Servicios</a></li>
+        <li><a href="#portfolio">Portafolio</a></li>
+        <li><a href="#testimonials">Testimonios</a></li>
+        <li><a href="#contact">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <a href="https://looka.com/s/186186796"> logo </a>
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Desarrollador Frontend Profesional</h1>
+      <p>Transforma tu visión en una realidad digital impactante.</p>
+      <a href="#contact" class="cta-btn">Contáctame</a>
+    </div>
+  </section>
+  <section id="services">
+    <h2>Mis Servicios</h2>
+    <div class="services-container">
+      <div class="service">
+        <h3>Diseño Web</h3>
+        <p>Creación de diseños atractivos y funcionales.</p>
+      </div>
+      <div class="service">
+        <h3>Desarrollo de Aplicaciones</h3>
+        <p>Desarrollo de aplicaciones web interactivas y responsivas.</p>
+      </div>
+      <div class="service">
+        <h3>Optimización SEO</h3>
+        <p>Mejora la visibilidad de tu sitio en motores de búsqueda.</p>
+      </div>
+    </div>
+  </section>
+  <section id="portfolio">
+    <h2>Portafolio</h2>
+    <div class="portfolio-container">
+      <div class="portfolio-item">
+        <img src="proyecto1.jpg" alt="Proyecto 1">
+        <div class="portfolio-info">
+          <h3>Proyecto 1</h3>
+          <p>Descripción breve del proyecto.</p>
+        </div>
+      </div>
+      <div class="portfolio-item">
+        <img src="proyecto2.jpg" alt="Proyecto 2">
+        <div class="portfolio-info">
+          <h3>Proyecto 2</h3>
+          <p>Descripción breve del proyecto.</p>
+        </div>
+      </div>
+      <div class="portfolio-item">
+        <img src="proyecto3.jpg" alt="Proyecto 3">
+        <div class="portfolio-info">
+          <h3>Proyecto 3</h3>
+          <p>Descripción breve del proyecto.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="testimonials">
+    <h2>Testimonios</h2>
+    <div class="testimonials-container">
+      <div class="testimonial">
+        <p>"Excelente servicio y atención al detalle. Nuestro sitio web ahora es increíblemente rápido y atractivo." - Cliente 1</p>
+      </div>
+      <div class="testimonial">
+        <p>"Muy profesional y fácil de trabajar. Altamente recomendado para cualquier proyecto web." - Cliente 2</p>
+      </div>
+      <div class="testimonial">
+        <p>"La mejor experiencia con un desarrollador. Mi sitio web ha mejorado significativamente en términos de diseño y funcionalidad." - Cliente 3</p>
+      </div>
+    </div>
+  </section>
+  <section class="cta">
+    <h2>¿Listo para empezar tu proyecto?</h2>
+    <p>Contacta conmigo hoy mismo para llevar tu idea al siguiente nivel.</p>
+    <a href="#contact" class="cta-btn">Hablemos</a>
+  </section>
+  <footer>
+    <div class="footer-container">
+      <div class="footer-about">
+        <h3>Sobre Mí</h3>
+        <p>Soy un desarrollador frontend con más de 5 años de experiencia en la creación de sitios web y aplicaciones atractivas y funcionales.</p>
+      </div>
+      <div class="footer-contact" id="contact">
+        <h3>Contacto</h3>
+        <p>Email: tuemail@example.com</p>
+        <p>Teléfono: (123) 456-7890</p>
+      </div>
+      <div class="footer-social">
+        <h3>Redes Sociales</h3>
+        <ul>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">GitHub</a></li>
+          <li><a href="#">Twitter</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 Mi Nombre. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+  
+</body>
+</html>
+<style>
+    body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 0;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.logo a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 24px;
+}
+
+.nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.nav-links li {
+  margin-left: 20px;
+}
+
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.hero {
+  background: url('hero-image.jpg') no-repeat center center/cover;
+  color: #fff;
+  text-align: center;
+  padding: 100px 20px;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cta-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #ff6600;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.services-container, .portfolio-container, .testimonials-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.service, .portfolio-item, .testimonial {
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 5px;
+  flex-basis: 30%;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-social ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-social ul li {
+  display: inline;
+  margin-right: 10px;
+}
+
+.footer-social a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+}
+
+</style>
