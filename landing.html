@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dev Portfolio — Quantum & Beyond</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #04040F;
+    --bg2: #08081A;
+    --bg3: #0C0C22;
+    --cyan: #00E5FF;
+    --violet: #7C3AED;
+    --amber: #F59E0B;
+    --pink: #EC4899;
+    --green: #10B981;
+    --text: #E2E8F0;
+    --muted: #64748B;
+    --border: rgba(0,229,255,0.12);
+    --card: rgba(8,8,26,0.85);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 3rem;
+    background: rgba(4,4,15,0.6);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: var(--cyan);
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 20px rgba(0,229,255,0.5);
+  }
+  .nav-logo span { color: var(--violet); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--cyan); }
+
+  /* ─── HERO ─── */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  #canvas-bg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    text-align: center;
+    max-width: 900px;
+    padding: 2rem;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(0,229,255,0.08);
+    border: 1px solid rgba(0,229,255,0.25);
+    border-radius: 999px;
+    padding: 0.4rem 1.2rem;
+    font-size: 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--cyan);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s ease both;
+  }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); animation: pulse-dot 2s ease infinite; }
+  @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
+
+  .hero-name {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #fff 0%, var(--cyan) 50%, var(--violet) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeUp 0.8s 0.1s ease both;
+    margin-bottom: 0.5rem;
+  }
+  .hero-role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    color: var(--muted);
+    min-height: 1.6rem;
+    animation: fadeUp 0.8s 0.2s ease both;
+    margin-bottom: 1.5rem;
+  }
+  .hero-role .typed { color: var(--cyan); }
+  .cursor { display: inline-block; width: 2px; height: 1em; background: var(--cyan); margin-left: 2px; animation: blink 1s step-end infinite; vertical-align: middle; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  .hero-desc {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 560px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .hero-ctas {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.75rem 1.8rem;
+    border-radius: 8px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--cyan);
+    color: #04040F;
+  }
+  .btn-primary:hover { background: #33ECFF; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,229,255,0.3); }
+  .btn-outline {
+    background: transparent;
+    border: 1px solid rgba(0,229,255,0.35);
+    color: var(--cyan);
+  }
+  .btn-outline:hover { background: rgba(0,229,255,0.08); transform: translateY(-2px); }
+
+  /* ─── SCROLL INDICATOR ─── */
+  .scroll-hint {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    z-index: 2; opacity: 0.5;
+    animation: fadeUp 1s 1s ease both;
+  }
+  .scroll-hint span { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+  .scroll-arrow { width: 20px; height: 20px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); animation: bounce 2s ease infinite; }
+  @keyframes bounce { 0%,100%{transform:rotate(45deg) translateY(0)} 50%{transform:rotate(45deg) translateY(4px)} }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 6rem 3rem; max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--cyan);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    opacity: 0.8;
+  }
+  .section-title {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(1.6rem, 3vw, 2.5rem);
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 3.5rem;
+    line-height: 1.2;
+  }
+  .section-title .accent { color: var(--cyan); }
+
+  /* ─── SKILLS GRID ─── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+  .skill-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.75rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  .skill-card.visible { opacity: 1; transform: translateY(0); }
+  .skill-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--card-accent, var(--cyan)), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .skill-card:hover::before { opacity: 1; }
+  .skill-card:hover {
+    border-color: var(--card-accent, rgba(0,229,255,0.4));
+    transform: translateY(-5px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 40px rgba(0,229,255,0.04);
+  }
+  .skill-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    background: rgba(0,229,255,0.08);
+    border: 1px solid var(--border);
+  }
+  .skill-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+  .skill-sub {
+    font-size: 0.75rem;
+    color: var(--card-accent, var(--cyan));
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 0.75rem;
+  }
+  .skill-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--muted);
+  }
+
+  /* ─── STAT BAR ─── */
+  .skill-bar-wrap { margin-top: 1rem; }
+  .skill-bar-label { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--muted); margin-bottom: 0.3rem; font-family: 'JetBrains Mono', monospace; }
+  .skill-bar-bg { height: 3px; background: rgba(255,255,255,0.06); border-radius: 99px; overflow: hidden; }
+  .skill-bar-fill { height: 100%; border-radius: 99px; width: 0%; transition: width 1s cubic-bezier(0.23,1,0.32,1); }
+
+  /* ─── SEPARADOR QUANTUM ─── */
+  .quantum-sep {
+    position: relative;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cyan), var(--violet), transparent);
+    margin: 0;
+    opacity: 0.25;
+  }
+
+  /* ─── QAI / QML SPOILER ─── */
+  #startup {
+    padding: 6rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  #startup::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(124,58,237,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .startup-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .startup-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  @media(max-width:768px){ .startup-grid{grid-template-columns:1fr;} }
+
+  .spoiler-card {
+    background: rgba(12, 6, 30, 0.9);
+    border: 1px solid rgba(124,58,237,0.3);
+    border-radius: 20px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s cubic-bezier(0.23,1,0.32,1);
+  }
+  .spoiler-card.visible { opacity: 1; transform: translateY(0); }
+  .spoiler-card::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 70% 20%, rgba(124,58,237,0.12), transparent 60%);
+    pointer-events: none;
+  }
+  .spoiler-chip {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(124,58,237,0.12);
+    border: 1px solid rgba(124,58,237,0.4);
+    border-radius: 99px;
+    padding: 0.3rem 0.9rem;
+    font-size: 0.65rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: #A78BFA;
+    letter-spacing: 0.12em;
+    margin-bottom: 1.5rem;
+  }
+  .spoiler-chip.amber { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.35); color: #FCD34D; }
+  .spoiler-chip .blink { animation: blink 1.4s step-end infinite; }
+
+  .spoiler-title {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: 2.2rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+  }
+  .q-gradient { background: linear-gradient(135deg, #A78BFA, #7C3AED, #EC4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .qml-gradient { background: linear-gradient(135deg, #F59E0B, #EF4444, #EC4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  .spoiler-code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: #A78BFA;
+    margin-bottom: 1.25rem;
+  }
+  .spoiler-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+  .spoiler-blurred {
+    position: relative;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(124,58,237,0.15);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    overflow: hidden;
+  }
+  .blurred-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.8;
+    filter: blur(4px);
+    user-select: none;
+  }
+  .classified-overlay {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,0.2);
+  }
+  .classified-badge {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    color: var(--violet);
+    border: 2px solid rgba(124,58,237,0.5);
+    padding: 0.4rem 1rem;
+    border-radius: 4px;
+    background: rgba(12,6,30,0.85);
+    transform: rotate(-2deg);
+    box-shadow: 0 0 20px rgba(124,58,237,0.3);
+  }
+  .spoiler-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+  .spoiler-pill {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 99px;
+    font-family: 'JetBrains Mono', monospace;
+    border: 1px solid rgba(124,58,237,0.3);
+    color: #A78BFA;
+    background: rgba(124,58,237,0.06);
+  }
+  .spoiler-pill.amber { border-color: rgba(245,158,11,0.3); color: #FCD34D; background: rgba(245,158,11,0.06); }
+
+  .quantum-countdown {
+    display: flex; gap: 1rem; margin-top: 1.5rem;
+  }
+  .q-stat {
+    flex: 1;
+    text-align: center;
+    padding: 0.75rem;
+    background: rgba(124,58,237,0.06);
+    border: 1px solid rgba(124,58,237,0.15);
+    border-radius: 10px;
+  }
+  .q-stat-num {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #A78BFA;
+    display: block;
+  }
+  .q-stat-num.amber { color: #FCD34D; }
+  .q-stat-lbl { font-size: 0.65rem; color: var(--muted); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.1em; }
+
+  /* ─── ORBITAL DECO ─── */
+  .orbital-wrap {
+    position: relative;
+    height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 1.5rem 0;
+  }
+  .orbital-core {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,58,237,0.8), rgba(124,58,237,0.2));
+    box-shadow: 0 0 20px rgba(124,58,237,0.5), 0 0 60px rgba(124,58,237,0.2);
+    z-index: 2;
+  }
+  .orbital-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(124,58,237,0.25);
+  }
+  .orbital-ring-1 { width: 90px; height: 90px; animation: spin 4s linear infinite; }
+  .orbital-ring-2 { width: 140px; height: 140px; animation: spin 7s linear infinite reverse; border-color: rgba(0,229,255,0.15); }
+  .orbital-ring-3 { width: 190px; height: 190px; animation: spin 11s linear infinite; border-color: rgba(245,158,11,0.1); }
+  .orbital-dot {
+    position: absolute;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    top: -3px; left: 50%; transform: translateX(-50%);
+  }
+  .orbital-dot-1 { background: var(--violet); box-shadow: 0 0 8px var(--violet); }
+  .orbital-dot-2 { background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
+  .orbital-dot-3 { background: var(--amber); box-shadow: 0 0 8px var(--amber); }
+  @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 3rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .footer-logo {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: 1.2rem;
+    color: var(--cyan);
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 20px rgba(0,229,255,0.4);
+  }
+  .footer-links { display: flex; gap: 2rem; list-style: none; }
+  .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.8rem; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--cyan); }
+  .footer-copy { font-size: 0.75rem; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  /* full-width wrapper for startup */
+  .full-width-section {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+  }
+
+  /* Grid layout of page separators */
+  .grid-lines {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* Glow orbs */
+  .orb {
+    position: fixed; border-radius: 50%; pointer-events: none; z-index: 0;
+    filter: blur(80px);
+  }
+  .orb-1 { width: 500px; height: 500px; background: rgba(124,58,237,0.06); top: -100px; right: -100px; }
+  .orb-2 { width: 400px; height: 400px; background: rgba(0,229,255,0.04); bottom: 10%; left: -100px; }
+</style>
+</head>
+<body>
+
+<div class="grid-lines"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">DEV<span>.</span>QUANTUM</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#startup">Startup</a></li>
+    <li><a href="#contact">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="canvas-bg"></canvas>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      <span>Disponible para proyectos · Open to collaborate</span>
+    </div>
+    <h1 class="hero-name">jm.cesc@ FULLSTACK<br>ENGINEER</h1>
+    <p class="hero-role">$ <span class="typed" id="typed-text"></span><span class="cursor"></span></p>
+    <p class="hero-desc">
+      Construyo soluciones en la intersección del software, la inteligencia artificial y la computación cuántica. Del frontend al modelo de lenguaje, del sensor IoT al qubit.
+    </p>
+    <div class="hero-ctas">
+      <a href="#skills" class="btn btn-primary">Ver mis skills</a>
+      <a href="#startup" class="btn btn-outline">Descubrir QAI &amp; QML ↓</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>SCROLL</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<div class="quantum-sep"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">// expertise matrix</div>
+  <h2 class="section-title">Stack <span class="accent">&amp; Dominios</span></h2>
+
+  <div class="skills-grid">
+
+    <!-- Frontend -->
+    <div class="skill-card" style="--card-accent:#00E5FF; transition-delay:0.05s">
+      <div class="skill-icon" style="background:rgba(0,229,255,0.1);border-color:rgba(0,229,255,0.2)">⚡</div>
+      <div class="skill-name">Frontend Dev</div>
+      <div class="skill-sub">UI / UX Engineering</div>
+      <p class="skill-desc">Interfaces de alto rendimiento. Diseño de componentes, animaciones, accesibilidad y arquitectura de micro-frontends.</p>
+      <div class="skill-tags">
+        <span class="tag">React</span><span class="tag">Vue 3</span><span class="tag">TypeScript</span>
+        <span class="tag">Tailwind</span><span class="tag">Vite</span><span class="tag">WebGL</span>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>Nivel</span><span>93%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" style="background:var(--cyan)" data-val="93"></div></div>
+      </div>
+    </div>
+
+    <!-- Backend -->
+    <div class="skill-card" style="--card-accent:#10B981; transition-delay:0.1s">
+      <div class="skill-icon" style="background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.2)">⚙️</div>
+      <div class="skill-name">Backend Dev</div>
+      <div class="skill-sub">APIs &amp; Servicios</div>
+      <p class="skill-desc">APIs REST y GraphQL robustas. Arquitecturas de microservicios, autenticación, mensajería y diseño de sistemas escalables.</p>
+      <div class="skill-tags">
+        <span class="tag">Node.js</span><span class="tag">Python</span><span class="tag">FastAPI</span>
+        <span class="tag">Express</span><span class="tag">gRPC</span><span class="tag">Docker</span>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>Nivel</span><span>90%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" style="background:#10B981" data-val="90"></div></div>
+      </div>
+    </div>
+
+    <!-- Fullstack -->
+    <div class="skill-card" style="--card-accent:#00E5FF; transition-delay:0.15s">
+      <div class="skill-icon" style="background:rgba(0,229,255,0.1);border-color:rgba(0,229,255,0.2)">🔗</div>
+      <div class="skill-name">Fullstack</div>
+      <div class="skill-sub">End-to-end Architecture</div>
+      <p class="skill-desc">Ciclo completo de desarrollo: desde el diseño del sistema hasta el despliegue en producción. CI/CD, monorepos y cloud-native.</p>
+      <div class="skill-tags">
+        <span class="tag">Next.js</span><span class="tag">NestJS</span><span class="tag">AWS</span>
+        <span class="tag">Kubernetes</span><span class="tag">Terraform</span>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>Nivel</span><span>91%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" style="background:var(--cyan)" data-val="91"></div></div>
+      </div>
+    </div>
+
+    <!-- DBA -->
+    <div class="skill-card" style="--card-accent:#F59E0B; transition-delay:0.2s">
+      <div class="skill-icon" style="background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.2)">🗄️</div>
+      <div class="skill-name">DBA</div>
+      <div class="skill-sub">Database Engineering</div>
+      <p class="skill-desc">Modelado relacional y no-relacional. Optimización de queries, sharding, replicación y estrategias de datos a escala.</p>
+      <div class="skill-tags">
+        <span class="tag">PostgreSQL</span><span class="tag">MongoDB</span><span class="tag">Redis</span>
+        <span class="tag">ClickHouse</span><span class="tag">Qdrant</span>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>Nivel</span><span>88%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" style="background:#F59E0B" data-val="88"></div></div>
+      </div>
+    </div>
+
+    <!-- ML / LM -->
+    <div class="skill-card" style="--card-accent:#EC4899; transition-delay:0.25s">
+      <div class="skill-icon" style="background:rgba(236,72,153,0.1);border-color:rgba(236,72,153,0.2)">🧠</div>
+      <div class="skill-name">ML / LM</div>
+      <div class="skill-sub">Machine Learning &amp; Language Models</div>
+      <p class="skill-desc">Entrenamiento, fine-tuning y despliegue de modelos. Pipelines de datos, feature engineering y evaluación de modelos.</p>
+      <div class="skill-tags">
+        <span class="tag">scikit-learn</span><span class="tag">PyTorch</span><span class="tag">TF</span>
+        <span class="tag">XGBoost</span><span class="tag">MLflow</span>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>Nivel</span><span>86%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" style="background:#EC4899" data-val="86"></div></div>
+      </div>
+    </div>
+
+    <!-- LLM -->
+    <div class="skill-card" style="--card-accent:#7C3AED; transition-delay:0.3s">
+      <div class="skill-icon" style="background:rgba(124,58,237,0.1);border-color:rgba(124,58,237,0.2)">🤖</div>
+      <div class="skill-name">LLM Engineering</div>
+      <div class="skill-sub">Large Language Models</div>
+      <p class="skill-desc">Prompt engineering avanzado, RAG pipelines, agentes autónomos, function calling y fine-tuning con RLHF.</p>
+      <div class="skill-tags">
+        <span class="tag">LangChain</span><span class="tag">OpenAI</span><span class="tag">Anthropic</span>
+        <span class="tag">RAG</span><span class="tag">LlamaIndex</span>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>Nivel</span><span>89%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" style="background:#7C3AED" data-val="89"></div></div>
+      </div>
+    </div>
+
+    <!-- AI -->
+    <div class="skill-card" style="--card-accent:#EC4899; transition-delay:0.35s">
+      <div class="skill-icon" style="background:rgba(236,72,153,0.1);border-color:rgba(236,72,153,0.2)">✨</div>
+      <div class="skill-name">Inteligencia Artificial</div>
+      <div class="skill-sub">Applied AI Systems</div>
+      <p class="skill-desc">Visión por computador, NLP, sistemas de recomendación, detección de anomalías y AI generativa en producción.</p>
+      <div class="skill-tags">
+        <span class="tag">OpenCV</span><span class="tag">YOLO</span><span class="tag">HuggingFace</span>
+        <span class="tag">Stable Diffusion</span><span class="tag">CLIP</span>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>Nivel</span><span>85%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" style="background:#EC4899" data-val="85"></div></div>
+      </div>
+    </div>
+
+    <!-- IoT -->
+    <div class="skill-card" style="--card-accent:#10B981; transition-delay:0.4s">
+      <div class="skill-icon" style="background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.2)">📡</div>
+      <div class="skill-name">IoT / Embebidos</div>
+      <div class="skill-sub">Edge Computing</div>
+      <p class="skill-desc">Redes de sensores, protocolos industriales y edge AI. Desde el firmware hasta la plataforma de datos en tiempo real.</p>
+      <div class="skill-tags">
+        <span class="tag">MQTT</span><span class="tag">ESP32</span><span class="tag">Raspberry Pi</span>
+        <span class="tag">OPC-UA</span><span class="tag">Edge AI</span><span class="tag">LoRa</span>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>Nivel</span><span>84%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" style="background:#10B981" data-val="84"></div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="quantum-sep"></div>
+
+<!-- STARTUP SPOILER -->
+<div class="full-width-section" style="background: linear-gradient(180deg, transparent, rgba(12,6,30,0.4) 30%, rgba(12,6,30,0.4) 70%, transparent);">
+<section id="startup">
+  <div class="startup-inner">
+    <div class="section-label">// próximamente · coming soon</div>
+    <h2 class="section-title" style="margin-bottom:0.5rem">El siguiente<br><span class="accent">nivel</span> de computación</h2>
+    <p style="color:var(--muted);font-size:0.9rem;max-width:560px;line-height:1.7;margin-bottom:0">
+      Dos proyectos que fusionan computación cuántica con inteligencia artificial clásica. Lo que viene no tiene nombre aún… pero tiene código.
+    </p>
+
+    <div class="startup-grid">
+
+      <!-- QAI -->
+      <div class="spoiler-card" style="transition-delay:0.1s">
+        <div class="spoiler-chip">
+          <span class="blink">◉</span> STARTUP EN STEALTH
+        </div>
+        <h3 class="spoiler-title"><span class="q-gradient">QAI</span></h3>
+        <div class="spoiler-code">// Quantum Artificial Intelligence</div>
+        <p class="spoiler-desc">
+          Una plataforma que combina circuitos cuánticos con modelos de lenguaje de gran escala. El objetivo: razonamiento más rápido, inferencia más profunda, hallazgos que los sistemas clásicos no pueden alcanzar.
+        </p>
+
+        <div class="orbital-wrap">
+          <div class="orbital-ring orbital-ring-1"><div class="orbital-dot orbital-dot-1"></div></div>
+          <div class="orbital-ring orbital-ring-2"><div class="orbital-dot orbital-dot-2"></div></div>
+          <div class="orbital-ring orbital-ring-3"><div class="orbital-dot orbital-dot-3"></div></div>
+          <div class="orbital-core"></div>
+        </div>
+
+        <div class="spoiler-blurred">
+          <div class="blurred-text">
+            Implementación de VQE para optimización de hiperparámetros<br>
+            Entanglement-based embedding layers sobre qubits lógicos<br>
+            Arquitectura híbrida clásico-cuántica con error mitigation<br>
+            Target: inferencia 10x más eficiente en problemas NP-hard
+          </div>
+          <div class="classified-overlay">
+            <div class="classified-badge">CLASIFICADO</div>
+          </div>
+        </div>
+
+        <div class="spoiler-pills">
+          <span class="spoiler-pill">Qiskit</span>
+          <span class="spoiler-pill">PennyLane</span>
+          <span class="spoiler-pill">Quantum Circuits</span>
+          <span class="spoiler-pill">VQE / QAOA</span>
+          <span class="spoiler-pill">LLM Integration</span>
+        </div>
+
+        <div class="quantum-countdown" style="margin-top:2rem">
+          <div class="q-stat"><span class="q-stat-num">Q3</span><span class="q-stat-lbl">ETA 2025</span></div>
+          <div class="q-stat"><span class="q-stat-num">∞</span><span class="q-stat-lbl">Superposición</span></div>
+          <div class="q-stat"><span class="q-stat-num">α|0⟩</span><span class="q-stat-lbl">Estado actual</span></div>
+        </div>
+      </div>
+
+      <!-- QML -->
+      <div class="spoiler-card" style="border-color:rgba(245,158,11,0.3);transition-delay:0.25s">
+        <div class="spoiler-card" style="position:absolute;inset:0;opacity:0;pointer-events:none"></div>
+        <div class="spoiler-chip amber">
+          <span class="blink">◉</span> EN DESARROLLO ACTIVO
+        </div>
+        <h3 class="spoiler-title"><span class="qml-gradient">QML</span></h3>
+        <div class="spoiler-code" style="color:#FCD34D">// Quantum Machine Learning</div>
+        <p class="spoiler-desc">
+          Algoritmos de machine learning nativos para hardware cuántico. Clasificadores cuánticos, redes neuronales parametrizadas y kernels cuánticos que superan sus equivalentes clásicos en ciertos regímenes de datos.
+        </p>
+
+        <div class="orbital-wrap">
+          <div style="position:relative;display:flex;align-items:center;justify-content:center;width:100%;height:100%">
+            <div class="orbital-ring orbital-ring-1" style="border-color:rgba(245,158,11,0.3);animation-duration:5s"><div class="orbital-dot" style="background:#F59E0B;box-shadow:0 0 8px #F59E0B;position:absolute;width:6px;height:6px;border-radius:50%;top:-3px;left:50%;transform:translateX(-50%)"></div></div>
+            <div class="orbital-ring orbital-ring-2" style="border-color:rgba(239,68,68,0.2);animation-duration:8s;animation-direction:reverse"><div class="orbital-dot" style="background:#EF4444;box-shadow:0 0 8px #EF4444;position:absolute;width:6px;height:6px;border-radius:50%;top:-3px;left:50%;transform:translateX(-50%)"></div></div>
+            <div class="orbital-ring orbital-ring-3" style="border-color:rgba(236,72,153,0.15);animation-duration:12s"><div class="orbital-dot" style="background:#EC4899;box-shadow:0 0 8px #EC4899;position:absolute;width:6px;height:6px;border-radius:50%;top:-3px;left:50%;transform:translateX(-50%)"></div></div>
+            <div style="width:40px;height:40px;border-radius:50%;background:radial-gradient(circle,rgba(245,158,11,0.8),rgba(245,158,11,0.2));box-shadow:0 0 20px rgba(245,158,11,0.5),0 0 60px rgba(245,158,11,0.2);z-index:2"></div>
+          </div>
+        </div>
+
+        <div class="spoiler-blurred">
+          <div class="blurred-text">
+            Quantum Support Vector Machine con kernel cuántico certificado<br>
+            Variational Quantum Eigensolver para feature extraction<br>
+            Quantum Neural Networks de 12-50 qubits en IBM Quantum<br>
+            Benchmark vs XGBoost en datasets de alta dimensionalidad
+          </div>
+          <div class="classified-overlay">
+            <div class="classified-badge" style="color:#F59E0B;border-color:rgba(245,158,11,0.5)">EN DESARROLLO</div>
+          </div>
+        </div>
+
+        <div class="spoiler-pills">
+          <span class="spoiler-pill amber">TensorFlow Quantum</span>
+          <span class="spoiler-pill amber">Cirq</span>
+          <span class="spoiler-pill amber">QSVM</span>
+          <span class="spoiler-pill amber">QNN</span>
+          <span class="spoiler-pill amber">IBM Quantum</span>
+        </div>
+
+        <div class="quantum-countdown" style="margin-top:2rem">
+          <div class="q-stat" style="border-color:rgba(245,158,11,0.15)"><span class="q-stat-num amber">Q4</span><span class="q-stat-lbl">ETA 2025</span></div>
+          <div class="q-stat" style="border-color:rgba(245,158,11,0.15)"><span class="q-stat-num amber">50+</span><span class="q-stat-lbl">Qubits</span></div>
+          <div class="q-stat" style="border-color:rgba(245,158,11,0.15)"><span class="q-stat-num amber">β|1⟩</span><span class="q-stat-lbl">Estado actual</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Nota de spoiler -->
+    <div style="text-align:center;margin-top:3rem;padding:1.5rem;border:1px dashed rgba(124,58,237,0.2);border-radius:12px;max-width:600px;margin-left:auto;margin-right:auto">
+      <div style="font-family:'Orbitron',monospace;font-size:0.7rem;color:#A78BFA;letter-spacing:0.15em;margin-bottom:0.5rem">// MENSAJE DEL FUNDADOR</div>
+      <p style="font-size:0.85rem;color:var(--muted);line-height:1.7;font-style:italic">
+        "La computación clásica tiene límites. La cuántica tiene superposición. La combinación de ambas aún no tiene nombre, pero yo ya estoy escribiendo ese código."
+      </p>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#7C3AED;margin-top:0.75rem">— Próximamente en early access —</div>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="quantum-sep"></div>
+
+<!-- CONTACT -->
+<section id="contact" style="text-align:center">
+  <div class="section-label">// get in touch</div>
+  <h2 class="section-title">¿Construimos algo<br><span class="accent">extraordinario</span>?</h2>
+  <p style="color:var(--muted);max-width:480px;margin:0 auto 2.5rem;font-size:0.95rem;line-height:1.7">
+    Abierto a colaboraciones, proyectos freelance, consultoría en AI/IoT y early access a QAI &amp; QML.
+  </p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+    <a href="mailto:josecesca@me.com" class="btn btn-primary">Enviar mensaje</a>
+    <a href="#" class="btn btn-outline">Ver GitHub</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">DEV.QUANTUM</div>
+  <ul class="footer-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#startup">QAI &amp; QML</a></li>
+    <li><a href="#contact">Contacto</a></li>
+  </ul>
+  <p class="footer-copy">© 2025-2026 · Construido en la intersección del bit y el qubit</p>
+</footer>
+
+<script>
+// ─── CANVAS PARTICLES ───
+const canvas = document.getElementById('canvas-bg');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [];
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', () => { resize(); initParticles(); });
+
+function initParticles() {
+  particles = [];
+  const count = Math.floor(W * H / 12000);
+  for (let i = 0; i < count; i++) {
+    particles.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      r: Math.random() * 1.5 + 0.3,
+      alpha: Math.random() * 0.5 + 0.1,
+      hue: Math.random() > 0.7 ? 280 : 190
+    });
+  }
+}
+initParticles();
+
+let mx = W/2, my = H/2;
+window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+function drawFrame() {
+  ctx.clearRect(0, 0, W, H);
+  for (let i = 0; i < particles.length; i++) {
+    const p = particles[i];
+    p.x += p.vx; p.y += p.vy;
+    if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+    if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+    const dx = mx - p.x, dy = my - p.y;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    if (dist < 120) {
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+      ctx.lineTo(mx, my);
+      ctx.strokeStyle = `hsla(${p.hue}, 100%, 70%, ${(1 - dist/120) * 0.08})`;
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+    }
+    for (let j = i+1; j < particles.length; j++) {
+      const q = particles[j];
+      const ex = p.x - q.x, ey = p.y - q.y;
+      const ed = Math.sqrt(ex*ex + ey*ey);
+      if (ed < 90) {
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(q.x, q.y);
+        ctx.strokeStyle = `hsla(190, 100%, 70%, ${(1 - ed/90) * 0.06})`;
+        ctx.lineWidth = 0.3;
+        ctx.stroke();
+      }
+    }
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+    ctx.fillStyle = `hsla(${p.hue}, 100%, 70%, ${p.alpha})`;
+    ctx.fill();
+  }
+  requestAnimationFrame(drawFrame);
+}
+drawFrame();
+
+// ─── TYPING EFFECT ───
+const roles = [
+  'fullstack engineer',
+  'llm architect',
+  'ml engineer',
+  'dba specialist',
+  'iot developer',
+  'quantum enthusiast'
+];
+let ri = 0, ci = 0, deleting = false;
+const el = document.getElementById('typed-text');
+function type() {
+  const word = roles[ri];
+  if (!deleting) {
+    el.textContent = word.slice(0, ci + 1);
+    ci++;
+    if (ci === word.length) { deleting = true; setTimeout(type, 1800); return; }
+  } else {
+    el.textContent = word.slice(0, ci - 1);
+    ci--;
+    if (ci === 0) { deleting = false; ri = (ri + 1) % roles.length; }
+  }
+  setTimeout(type, deleting ? 60 : 100);
+}
+type();
+
+// ─── INTERSECTION OBSERVER ───
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      // animate bars
+      e.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+        bar.style.width = bar.dataset.val + '%';
+      });
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.skill-card, .spoiler-card').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
