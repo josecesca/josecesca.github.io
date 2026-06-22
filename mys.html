@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consola /api/mys</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --panel: #161922;
+    --panel-border: #262b38;
+    --text: #e7e9ee;
+    --text-dim: #8b91a3;
+    --accent: #5fd0a5;
+    --accent-dim: #2c4a3d;
+    --error: #e0664f;
+    --warn: #d9a23b;
+    --mono: "SF Mono", "Consolas", "Menlo", monospace;
+    --sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    padding: 32px 24px 64px;
+  }
+
+  header {
+    max-width: 980px;
+    margin: 0 auto 28px;
+  }
+
+  header h1 {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+  }
+
+  header p {
+    color: var(--text-dim);
+    margin: 0;
+    font-size: 13px;
+  }
+
+  .base-url {
+    max-width: 980px;
+    margin: 0 auto 24px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .base-url label {
+    font-size: 12px;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+
+  .base-url input {
+    flex: 1;
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    color: var(--text);
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+
+  .grid {
+    max-width: 980px;
+    margin: 0 auto 32px;
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 860px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  .card-search {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .card-search .eyebrow {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .card-search .route {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    margin: -4px 0 4px;
+  }
+
+  .card-search input {
+    background: #0d0f14;
+    border: 1px solid var(--panel-border);
+    color: var(--text);
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-family: var(--mono);
+    font-size: 13px;
+    width: 100%;
+  }
+
+  .card-search input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  .card-search button {
+    background: var(--accent-dim);
+    color: var(--accent);
+    border: 1px solid var(--accent-dim);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+
+  .card-search button:hover { background: #355c4c; }
+  .card-search button:disabled { opacity: 0.5; cursor: default; }
+
+  .status {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--text-dim);
+    min-height: 14px;
+  }
+
+  .status.ok { color: var(--accent); }
+  .status.err { color: var(--error); }
+
+  /* ---- Resultados / fichas ---- */
+
+  #resultados {
+    max-width: 980px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  #resultados:empty::before {
+    content: "Sin resultados todavía. Hacé una búsqueda arriba.";
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+
+  .ficha {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .ficha-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--panel-border);
+    background: linear-gradient(180deg, rgba(95,208,165,0.06), transparent);
+  }
+
+  .ficha-header .id-block .eyebrow {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+    margin-bottom: 2px;
+  }
+
+  .ficha-header .id-block .id-value {
+    font-family: var(--mono);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .badge {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+    white-space: nowrap;
+  }
+
+  .badge.ok    { color: var(--accent); background: rgba(95,208,165,0.1); }
+  .badge.bad   { color: var(--error);  background: rgba(224,102,79,0.1); }
+  .badge.warn  { color: var(--warn);   background: rgba(217,162,59,0.1); }
+  .badge.neutral { color: var(--text-dim); background: rgba(139,145,163,0.08); }
+
+  .ficha-body {
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .field-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  @media (max-width: 700px) {
+    .field-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .field .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-dim);
+    margin-bottom: 3px;
+  }
+
+  .field .value {
+    font-size: 14px;
+    font-family: var(--mono);
+  }
+
+  .field .value.empty {
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .chip {
+    font-family: var(--mono);
+    font-size: 12px;
+    background: #0d0f14;
+    border: 1px solid var(--panel-border);
+    border-radius: 5px;
+    padding: 3px 8px;
+  }
+
+  .section-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    font-weight: 600;
+    margin: 0 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title .count {
+    color: var(--text-dim);
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  .subcards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  @media (max-width: 700px) {
+    .subcards { grid-template-columns: 1fr; }
+  }
+
+  .subcard {
+    background: #0d0f14;
+    border: 1px solid var(--panel-border);
+    border-radius: 8px;
+    padding: 12px;
+  }
+
+  .subcard .nombre {
+    font-size: 13.5px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .subcard dl {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 3px 8px;
+    margin: 0;
+  }
+
+  .subcard dt {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-dim);
+  }
+
+  .subcard dd {
+    font-size: 12px;
+    font-family: var(--mono);
+    margin: 0;
+  }
+
+  .empty-note {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <h1>Consola de pruebas — /api/mys</h1>
+    <p>Busca títulos y muestra una ficha con sus productores y establecimientos.</p>
+  </header>
+
+  <div class="base-url">
+    <label for="baseUrl">Base URL</label>
+    <input id="baseUrl" type="text" value="http://192.168.1.50:8080/api/mys" />
+  </div>
+
+  <div class="grid">
+
+    <div class="card-search">
+      <span class="eyebrow">Colección completa</span>
+      <span class="route">GET /titulos</span>
+      <button id="btnListar">Listar todos</button>
+      <div class="status" id="statusListar"></div>
+    </div>
+
+    <div class="card-search">
+      <span class="eyebrow">Por id</span>
+      <span class="route">GET /titulo/{id}</span>
+      <input id="inputId" type="text" placeholder="Ej: 123" />
+      <button id="btnPorId">Buscar</button>
+      <div class="status" id="statusPorId"></div>
+    </div>
+
+    <div class="card-search">
+      <span class="eyebrow">Por caracteres</span>
+      <span class="route">GET /car/{caracteres}</span>
+      <input id="inputCaracteres" type="text" maxlength="4" placeholder="Ej: AB o ABCD" />
+      <button id="btnPorCaracteres">Buscar</button>
+      <div class="status" id="statusPorCaracteres"></div>
+    </div>
+
+  </div>
+
+  <div id="resultados"></div>
+
+<script>
+  function baseUrl() {
+    return document.getElementById('baseUrl').value.replace(/\/$/, '');
+  }
+
+  function setStatus(elId, text, kind) {
+    const el = document.getElementById(elId);
+    el.textContent = text;
+    el.className = 'status' + (kind ? ' ' + kind : '');
+  }
+
+  function esc(value) {
+    if (value === null || value === undefined || value === '') return '';
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  function campo(label, value) {
+    const v = esc(value);
+    return `
+      <div class="field">
+        <div class="label">${esc(label)}</div>
+        <div class="value ${v ? '' : 'empty'}">${v || '—'}</div>
+      </div>`;
+  }
+
+  function chips(label, items) {
+    if (!items || items.length === 0) {
+      return `
+        <div class="field">
+          <div class="label">${esc(label)}</div>
+          <div class="value empty">sin marcas</div>
+        </div>`;
+    }
+    const chipsHtml = items.map(m => `<span class="chip">${esc(m)}</span>`).join('');
+    return `
+      <div class="field">
+        <div class="label">${esc(label)}</div>
+        <div class="chips">${chipsHtml}</div>
+      </div>`;
+  }
+
+  function badgeClaseStatus(status) {
+    const s = (status || '').toUpperCase();
+    if (s === 'VIGENTE') return 'ok';
+    if (s === 'VENCIDO' || s === 'CADUCO') return 'bad';
+    if (s === 'SUSPENDIDO') return 'warn';
+    return 'neutral';
+  }
+
+  function renderProductor(p) {
+    return `
+      <div class="subcard">
+        <div class="nombre">${esc(p.nombre) || 'Sin nombre'}</div>
+        <dl>
+          <dt>Doc</dt><dd>${esc(p.nroDoc) || '—'}</dd>
+          <dt>Domicilio</dt><dd>${esc(p.domicilio) || '—'}</dd>
+        </dl>
+      </div>`;
+  }
+
+  function renderEstablecimiento(e) {
+    const coords = (e.lat !== undefined && e.lon !== undefined && e.lat !== null && e.lon !== null)
+      ? `${e.lat}, ${e.lon}` : '—';
+    return `
+      <div class="subcard">
+        <div class="nombre">${esc(e.nombre) || 'Sin nombre'}</div>
+        <dl>
+          <dt>Renspa</dt><dd>${esc(e.renspa) || '—'}</dd>
+          <dt>Hectáreas</dt><dd>${e.hectareas ?? '—'}</dd>
+          <dt>Coordenadas</dt><dd>${coords}</dd>
+          <dt>Administrador</dt><dd>${esc(e.administrador) || '—'}</dd>
+        </dl>
+      </div>`;
+  }
+
+  function renderSeccionLista(titulo, key, label, renderItem) {
+    const items = titulo[key] || [];
+    if (items.length === 0) {
+      return `
+        <div>
+          <div class="section-title">${esc(label)} <span class="count">(0)</span></div>
+          <div class="empty-note">No hay ${esc(label).toLowerCase()} vinculados.</div>
+        </div>`;
+    }
+    return `
+      <div>
+        <div class="section-title">${esc(label)} <span class="count">(${items.length})</span></div>
+        <div class="subcards">${items.map(renderItem).join('')}</div>
+      </div>`;
+  }
+
+  function renderFicha(t) {
+    const statusClass = badgeClaseStatus(t.status);
+
+    return `
+      <div class="ficha">
+        <div class="ficha-header">
+          <div class="id-block">
+            <div class="eyebrow">Título</div>
+            <div class="id-value">#${esc(t.idTitulo)} · ${esc(t.caracteres) || '—'}</div>
+          </div>
+          <span class="badge ${statusClass}">${esc(t.status) || 'SIN ESTADO'}</span>
+        </div>
+        <div class="ficha-body">
+          <div class="field-grid">
+            ${campo('Nro. Registro', t.nroRegistro)}
+            ${campo('Fecha inicio', t.fechaInicio)}
+            ${campo('Fecha vto.', t.fechaVto)}
+            ${campo('Caracteres', t.caracteres)}
+            ${chips('Marca oreja izq.', t.marcaOrejaIzquierda)}
+            ${chips('Marca oreja der.', t.marcaOrejaDerecha)}
+          </div>
+          ${renderSeccionLista(t, 'productores', 'Productores', renderProductor)}
+          ${renderSeccionLista(t, 'establecimientos', 'Establecimientos', renderEstablecimiento)}
+        </div>
+      </div>`;
+  }
+
+  function pintarResultados(data) {
+    const cont = document.getElementById('resultados');
+    cont.innerHTML = '';
+
+    if (!data) return;
+
+    const lista = Array.isArray(data) ? data : [data];
+
+    if (lista.length === 0) {
+      cont.innerHTML = '<div class="empty-note">No se encontraron títulos.</div>';
+      return;
+    }
+
+    cont.innerHTML = lista.map(renderFicha).join('');
+  }
+
+  async function llamar({ url, statusId, button }) {
+    button.disabled = true;
+    setStatus(statusId, 'Cargando…');
+
+    try {
+      const res = await fetch(url, { method: 'GET' });
+      const body = await res.json().catch(() => null);
+
+      if (res.ok) {
+        setStatus(statusId, `${res.status} OK`, 'ok');
+        pintarResultados(body);
+      } else {
+        setStatus(statusId, `${res.status} ${res.statusText}`, 'err');
+        document.getElementById('resultados').innerHTML =
+          `<div class="empty-note">${esc(body && body.error ? body.error : 'Error en la respuesta.')}</div>`;
+      }
+    } catch (err) {
+      setStatus(statusId, 'Error de red: ' + err.message, 'err');
+      document.getElementById('resultados').innerHTML =
+        `<div class="empty-note">${esc(err.message)}</div>`;
+    } finally {
+      button.disabled = false;
+    }
+  }
+
+  document.getElementById('btnListar').addEventListener('click', () => {
+    llamar({
+      url: `${baseUrl()}/titulos`,
+      statusId: 'statusListar',
+      button: document.getElementById('btnListar')
+    });
+  });
+
+  document.getElementById('btnPorId').addEventListener('click', () => {
+    const id = document.getElementById('inputId').value.trim();
+    if (!id) { setStatus('statusPorId', 'Ingresá un id', 'err'); return; }
+    llamar({
+      url: `${baseUrl()}/titulo/${encodeURIComponent(id)}`,
+      statusId: 'statusPorId',
+      button: document.getElementById('btnPorId')
+    });
+  });
+
+  document.getElementById('btnPorCaracteres').addEventListener('click', () => {
+    const car = document.getElementById('inputCaracteres').value.trim();
+    if (!car) { setStatus('statusPorCaracteres', 'Ingresá caracteres', 'err'); return; }
+    llamar({
+      url: `${baseUrl()}/car/${encodeURIComponent(car)}`,
+      statusId: 'statusPorCaracteres',
+      button: document.getElementById('btnPorCaracteres')
+    });
+  });
+
+  document.getElementById('inputId').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('btnPorId').click();
+  });
+  document.getElementById('inputCaracteres').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('btnPorCaracteres').click();
+  });
+</script>
+
+</body>
+</html>
