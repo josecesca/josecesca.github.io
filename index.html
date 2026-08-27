@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>IntelTech Studio</title>
+    
+    <!-- Metaetiquetas para simular Aplicación Nativa iOS (Web Mobile) -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="IntelTech">
+
+    <!-- Tailwind CSS v3 -->
+    <script src="https://tailwindcss.com"></script>
+    <style>
+        @import url('https://googleapis.com');
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #000000;
+            color: #f5f5f7;
+            padding-bottom: 80px; /* Espacio para no tapar el contenido con la barra inferior móvil */
+        }
+        .apple-gradient {
+            background: linear-gradient(135deg, #ff3b30 0%, #ff9500 50%, #007aff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card-blur {
+            background: rgba(28, 28, 30, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-blue-500 selection:text-white">
+
+    <!-- NAV SUPERIOR SUTIL (Estilo iOS) -->
+    <nav class="sticky top-0 z-40 border-b border-neutral-900 bg-black/80 backdrop-blur-md pt-safe">
+        <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+            <div class="text-base font-semibold tracking-tight"> jm.cesc@ IA  Studio</div>
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        </div>
+    </nav>
+
+    <!-- HERO PRINCIPAL -->
+    <header class="max-w-md mx-auto px-6 pt-12 pb-10 text-center">
+        <span class="text-[11px] uppercase tracking-widest text-blue-500 font-bold px-3 py-1 bg-blue-500/10 rounded-full inline-block">SwiftUI & Apple Intelligence</span>
+        <h1 class="text-4xl font-bold tracking-tight mt-5 mb-6 leading-tight">
+            Lleva tus apps al futuro con <span class="apple-gradient">Apple Intelligence</span>
+        </h1>
+        <p class="text-lg text-neutral-400 font-light leading-relaxed">
+            Ingeniería avanzada y despliegue de modelos en el dispositivo optimizados para hardware <strong>Apple Silicon</strong>.
+        </p>
+        <div class="mt-8">
+            <a href="#contacto" class="block w-full bg-white text-black font-semibold py-3.5 rounded-xl hover:bg-neutral-200 transition text-center text-sm shadow-md">Iniciar Proyecto</a>
+        </div>
+    </header>
+
+    <!-- SECCIÓN: CAPACIDADES / SOFTWARE -->
+    <section id="servicios" class="max-w-md mx-auto px-6 py-10 border-t border-neutral-900">
+        <h2 class="text-2xl font-bold tracking-tight mb-2">Stack de Software</h2>
+        <p class="text-neutral-400 text-sm mb-6">Soluciones intermedio-avanzadas con frameworks nativos.</p>
+        
+        <div class="space-y-4">
+            <div class="card-blur p-5 rounded-xl">
+                <div class="text-blue-500 text-2xl mb-2">❖</div>
+                <h3 class="text-base font-semibold mb-1">Desarrollo SwiftUI</h3>
+                <p class="text-neutral-400 text-xs leading-relaxed">Interfaces reactivas, fluidas y limpias diseñadas específicamente para iOS, iPadOS y macOS.</p>
+            </div>
+            <div class="card-blur p-5 rounded-xl">
+                <div class="text-purple-500 text-2xl mb-2">🧠</div>
+                <h3 class="text-base font-semibold mb-1">Apple Intelligence</h3>
+                <p class="text-neutral-400 text-xs leading-relaxed">Integración práctica de flujos inteligentes y automatizaciones nativas del sistema operativo.</p>
+            </div>
+            <div class="card-blur p-5 rounded-xl">
+                <div class="text-orange-500 text-2xl mb-2">⚡</div>
+                <h3 class="text-base font-semibold mb-1">Optimización Core ML</h3>
+                <p class="text-neutral-400 text-xs leading-relaxed">Modelos ajustados para aprovechar los núcleos de procesamiento físico del Neural Engine.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN: PRIVACIDAD Y SEGURIDAD -->
+    <section class="bg-neutral-950 py-10 border-y border-neutral-900">
+        <div class="max-w-md mx-auto px-6">
+            <span class="text-[10px] uppercase tracking-widest text-emerald-500 font-bold block mb-1">Privacidad Absoluta</span>
+            <h2 class="text-2xl font-bold tracking-tight mb-4">Modelos On-Device</h2>
+            <p class="text-neutral-400 text-sm leading-relaxed mb-6">
+                Despliegue enfocado en procesamiento local seguro. Los datos confidenciales del usuario final se gestionan bajo la arquitectura criptográfica de <strong>Private Cloud Compute</strong> de Apple.
+            </p>
+            <div class="card-blur p-4 rounded-xl border-emerald-500/20 bg-gradient-to-br from-neutral-900 to-neutral-950 flex gap-3 items-center">
+                <div class="text-2xl">🔒</div>
+                <div class="text-xs text-neutral-300 font-medium">Sincronización segura y flujos de trabajo sin fricciones entre tus dispositivos.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN: ENTÓNRO DE HARDWARE -->
+    <section id="ecosistema" class="max-w-md mx-auto px-6 py-10">
+        <h2 class="text-2xl font-bold tracking-tight mb-2">Hardware de Pruebas</h2>
+        <p class="text-neutral-400 text-sm mb-6">Validación comercial directa en entornos físicos reales.</p>
+
+        <div class="space-y-3">
+            <div class="flex items-center justify-between p-4 border border-neutral-800 bg-neutral-900/40 rounded-xl">
+                <div>
+                    <h3 class="text-sm font-bold text-white">Mac mini (M4)</h3>
+                    <p class="text-neutral-500 text-xs">Compilación y carga pesada</p>
+                </div>
+                <span class="text-xs font-semibold px-2 py-1 bg-neutral-800 rounded-md text-neutral-400">Core Stack</span>
+            </div>
+            <div class="flex items-center justify-between p-4 border border-neutral-800 bg-neutral-900/40 rounded-xl">
+                <div>
+                    <h3 class="text-sm font-bold text-white">iPhone 17 Pro</h3>
+                    <p class="text-neutral-500 text-xs">Pruebas IA y rendimiento móvil</p>
+                </div>
+                <span class="text-xs font-semibold px-2 py-1 bg-blue-500/10 text-blue-400 rounded-md">Mobile Target</span>
+            </div>
+            <div class="flex items-center justify-between p-4 border border-neutral-800 bg-neutral-900/40 rounded-xl">
+                <div>
+                    <h3 class="text-sm font-bold text-white">MacBook Air (M1)</h3>
+                    <p class="text-neutral-500 text-xs">Portabilidad y retrocompatibilidad</p>
+                </div>
+                <span class="text-xs font-semibold px-2 py-1 bg-neutral-800 rounded-md text-neutral-400">Legacy Check</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FORMULARIO DE CONTACTO -->
+    <section id="contacto" class="max-w-md mx-auto px-6 py-10 border-t border-neutral-900">
+        <h2 class="text-2xl font-bold tracking-tight text-center mb-2">Contacto Directo</h2>
+        <p class="text-neutral-400 text-xs text-center mb-6">Hablemos de arquitectura o integraciones de software.</p>
+        
+        <form class="space-y-4" action="#" method="POST" onsubmit="event.preventDefault(); alert('¡Formulario enviado con éxito!');">
+            <div>
+                <input type="text" required class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 h-12 text-sm text-white focus:outline-none focus:border-blue-500 transition" placeholder="Tu Nombre / Empresa">
+            </div>
+            <div>
+                <input type="email" required class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 h-12 text-sm text-white focus:outline-none focus:border-blue-500 transition" placeholder="Correo Electrónico">
+            </div>
+            <div>
+                <textarea rows="3" required class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500 transition resize-none" placeholder="¿Qué necesitas construir?"></textarea>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white font-semibold h-12 rounded-xl hover:bg-blue-500 transition text-sm cursor-pointer shadow-md">Enviar Mensaje</button>
+        </form>
+    </section>
+
+    <!-- FOOTER MÓVIL SUTIL -->
+    <footer class="max-w-md mx-auto text-center py-6 text-[10px] text-neutral-600 px-6">
+        <p>&copy; 2026 IntelTech Studio. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- MENÚ INFERIOR TÁCTIL (Estilo Barra de Herramientas de iOS) -->
+    <div class="fixed bottom-0 left-0 right-0 z-50 border-t border-neutral-900 bg-neutral-950/80 backdrop-blur-xl pb-safe">
+        <div class="max-w-md mx-auto h-16 flex items-center justify-around px-4">
+            <a href="#servicios" class="flex flex-col items-center justify-center text-center text-neutral-400 hover:text-blue-500 transition w-16 h-12">
+                <span class="text-lg">❖</span>
+                <span class="text-[10px] mt-0.5 tracking-tight">Servicios</span>
+            </a>
+            <a href="#ecosistema" class="flex flex-col items-center justify-center text-center text-neutral-400 hover:text-blue-500 transition w-16 h-12">
+                <span class="text-lg">💻</span>
+                <span class="text-[10px] mt-0.5 tracking-tight">Hardware</span>
+            </a>
