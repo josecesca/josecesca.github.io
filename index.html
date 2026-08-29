@@ -130,7 +130,8 @@
         <h2 class="text-2xl font-bold tracking-tight text-center mb-2">Contacto Directo</h2>
         <p class="text-neutral-400 text-xs text-center mb-6">Hablemos de arquitectura o integraciones de software.</p>
         
-        <form class="space-y-4" action="#" method="POST" onsubmit="event.preventDefault(); alert('¡Formulario enviado con éxito!');">
+        <form class="space-y-4" action="https://api.web3forms.com/submit" method="POST" onsubmit="event.preventDefault(); alert('¡Formulario enviado con éxito!');">
+            <input type="hidden" name="access_key" value="ab2116f3-abf4-4df2-94e3-3c65e04a7721">
             <div>
                 <input type="text" required class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 h-12 text-sm text-white focus:outline-none focus:border-blue-500 transition" placeholder="Tu Nombre / Empresa">
             </div>
