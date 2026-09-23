@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>De los Bits a los LLMs — AI Factory</title>
+<style>
+:root{
+  --bg:#0b0e14; --bg2:#11151f; --fg:#eef1f6; --muted:#9aa4b2;
+  --accent:#5eead4; --accent2:#a78bfa; --line:#232a38;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){ --bg:#f6f7fb; --bg2:#ffffff; --fg:#12151c; --muted:#5b6472; --line:#e3e6ee; }
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px); height:100%}
+body{
+  margin:0; height:100%; background:var(--bg); color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  display:flex; flex-direction:column;
+}
+.deck{flex:1; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; padding:24px;}
+.slide{
+  display:none; width:100%; max-width:760px; background:var(--bg2); border:1px solid var(--line);
+  border-radius:16px; padding:40px 36px; min-height:380px; flex-direction:column; justify-content:center;
+}
+.slide.active{display:flex}
+.tag{color:var(--accent); font-size:13px; letter-spacing:.12em; text-transform:uppercase; font-weight:600; margin-bottom:10px}
+h1{font-size:clamp(28px,5vw,42px); margin:0 0 12px; line-height:1.15}
+h2{font-size:clamp(22px,4vw,30px); margin:0 0 18px}
+p.lead{color:var(--muted); font-size:18px; line-height:1.5; margin:0 0 8px}
+.timeline{display:flex; flex-direction:column; gap:10px; margin-top:6px}
+.trow{display:flex; align-items:baseline; gap:14px; border-left:2px solid var(--accent); padding-left:14px}
+.tyear{color:var(--accent2); font-weight:700; min-width:64px; font-size:14px}
+.ttext{color:var(--fg); font-size:16px}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:6px}
+.card{border:1px solid var(--line); border-radius:10px; padding:14px 16px}
+.card h3{margin:0 0 6px; font-size:16px; color:var(--accent)}
+.card p{margin:0; color:var(--muted); font-size:14px; line-height:1.4}
+ul.plain{margin:6px 0 0; padding-left:18px; color:var(--fg)}
+ul.plain li{margin-bottom:8px; font-size:16px}
+.badge{display:inline-block; background:rgba(94,234,212,.12); color:var(--accent); border:1px solid var(--accent); border-radius:999px; padding:3px 12px; font-size:13px; margin:4px 6px 0 0}
+.footer-nav{
+  display:flex; align-items:center; justify-content:center; gap:16px; padding:14px 0 calc(14px + env(safe-area-inset-bottom,0px));
+  background:var(--bg);
+}
+.footer-nav button{
+  background:var(--bg2); color:var(--fg); border:1px solid var(--line); border-radius:8px;
+  padding:8px 16px; font-size:15px; cursor:pointer;
+}
+.footer-nav button:disabled{opacity:.35; cursor:default}
+.dots{display:flex; gap:6px}
+.dot{width:7px; height:7px; border-radius:50%; background:var(--line); cursor:pointer}
+.dot.active{background:var(--accent)}
+.counter{color:var(--muted); font-size:13px; min-width:42px; text-align:center}
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <div class="slide active">
+    <div class="tag">AI Factory · Skills</div>
+    <h1>De los bits a los LLMs</h1>
+    <p class="lead">Más de 40 años construyendo software, desde antes de que existiera Internet, hasta un laboratorio de IA local propio.</p>
+    <p class="lead">Ingeniero de software · 1980 — hoy</p>
+  </div>
+
+  <div class="slide">
+    <div class="tag">Trayectoria</div>
+    <h2>Una carrera que atravesó cada capa de la computación</h2>
+    <div class="timeline">
+      <div class="trow"><div class="tyear">1980s</div><div class="ttext">Egresado como ingeniero de software, antes de Internet.</div></div>
+      <div class="trow"><div class="tyear">Bits→Bytes</div><div class="ttext">Formación desde el bit: bytes, MB, GB, hasta TB.</div></div>
+      <div class="trow"><div class="tyear">Backends</div><div class="ttext">Bases relacionales, orientadas a objetos y a grafos.</div></div>
+      <div class="trow"><div class="tyear">IA clásica</div><div class="ttext">Redes neuronales y machine learning.</div></div>
+      <div class="trow"><div class="tyear">Deep learning</div><div class="ttext">Programación de tensores con PyTorch.</div></div>
+      <div class="trow"><div class="tyear">Hoy</div><div class="ttext">Laboratorio de IA local propio.</div></div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="tag">Fundamentos</div>
+    <h2>Dominio de datos en todas sus formas</h2>
+    <div class="grid2">
+      <div class="card"><h3>Relacionales</h3><p>Modelado normalizado, SQL, integridad transaccional.</p></div>
+      <div class="card"><h3>Orientadas a objetos</h3><p>Persistencia de objetos, mapeo OO-DB.</p></div>
+      <div class="card"><h3>Grafos</h3><p>Relaciones complejas, consultas de red y conexión.</p></div>
+      <div class="card"><h3>Escala</h3><p>De bytes a terabytes: arquitectura para cada tamaño de dato.</p></div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="tag">IA & Deep Learning</div>
+    <h2>De las redes neuronales a los tensores</h2>
+    <ul class="plain">
+      <li>Machine learning clásico: modelos, features, evaluación.</li>
+      <li>Redes neuronales: fundamentos y arquitectura.</li>
+      <li>PyTorch: programación de tensores, entrenamiento, GPU.</li>
+      <li>Laboratorio de IA local: modelos corriendo en infraestructura propia.</li>
+    </ul>
+  </div>
+
+  <div class="slide">
+    <div class="tag">AI Factory</div>
+    <h2>Qué puedo aportar</h2>
+    <p class="lead">Un perfil poco común: décadas de ingeniería de software sólida + IA moderna aplicada en un lab local.</p>
+    <div>
+      <span class="badge">Arquitectura de backend</span>
+      <span class="badge">Modelado de datos (SQL/OO/Grafos)</span>
+      <span class="badge">Machine Learning</span>
+      <span class="badge">PyTorch / Tensores</span>
+      <span class="badge">IA local / on-premise</span>
+      <span class="badge">40+ años de criterio técnico</span>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="tag">Cierre</div>
+    <h1>Hablemos</h1>
+    <p class="lead">Experiencia que empezó antes de Internet y hoy corre modelos de IA en un laboratorio propio.</p>
+    <p class="lead">Listo para sumar valor a tu equipo o proyecto de AI Factory.</p>
+  </div>
+
+</div>
+
+<div class="footer-nav">
+  <button id="prevBtn" onclick="go(-1)">← Anterior</button>
+  <div class="dots" id="dots"></div>
+  <span class="counter" id="counter"></span>
+  <button id="nextBtn" onclick="go(1)">Siguiente →</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const dotsEl = document.getElementById('dots');
+let i = 0;
+slides.forEach((_, idx) => {
+  const d = document.createElement('div');
+  d.className = 'dot' + (idx===0?' active':'');
+  d.onclick = () => { i = idx; render(); };
+  dotsEl.appendChild(d);
+});
+function render(){
+  slides.forEach((s, idx) => s.classList.toggle('active', idx===i));
+  document.querySelectorAll('.dot').forEach((d, idx) => d.classList.toggle('active', idx===i));
+  document.getElementById('counter').textContent = (i+1) + ' / ' + slides.length;
+  document.getElementById('prevBtn').disabled = i===0;
+  document.getElementById('nextBtn').disabled = i===slides.length-1;
+}
+function go(delta){ i = Math.max(0, Math.min(slides.length-1, i+delta)); render(); }
+document.addEventListener('keydown', e => {
+  if(e.key === 'ArrowRight') go(1);
+  if(e.key === 'ArrowLeft') go(-1);
+});
+render();
+</script>
+</body>
+</html>
