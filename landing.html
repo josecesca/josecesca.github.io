@@ -41,6 +41,10 @@ p.lead{color:var(--muted); font-size:18px; line-height:1.5; margin:0 0 8px}
 ul.plain{margin:6px 0 0; padding-left:18px; color:var(--fg)}
 ul.plain li{margin-bottom:8px; font-size:16px}
 .badge{display:inline-block; background:rgba(94,234,212,.12); color:var(--accent); border:1px solid var(--accent); border-radius:999px; padding:3px 12px; font-size:13px; margin:4px 6px 0 0}
+.subline{display:flex; align-items:center; flex-wrap:wrap; gap:0; margin-top:6px}
+.sunit{display:flex; align-items:center; gap:8px}
+.spill{background:rgba(167,139,250,.12); color:var(--accent2); border:1px solid var(--accent2); border-radius:999px; padding:3px 12px; font-size:13px; font-weight:600; white-space:nowrap}
+.sarrow{color:var(--muted); padding:0 8px; font-size:14px}
 .footer-nav{
   display:flex; align-items:center; justify-content:center; gap:16px; padding:14px 0 calc(14px + env(safe-area-inset-bottom,0px));
   background:var(--bg);
@@ -71,7 +75,15 @@ ul.plain li{margin-bottom:8px; font-size:16px}
     <h2>Una carrera que atravesó cada capa de la computación</h2>
     <div class="timeline">
       <div class="trow"><div class="tyear">1980s</div><div class="ttext">Egresado como ingeniero de software, antes de Internet.</div></div>
-      <div class="trow"><div class="tyear">Bits→Bytes</div><div class="ttext">Formación desde el bit: bytes, MB, GB, hasta TB.</div></div>
+      <div class="trow"><div class="tyear">Escala</div><div class="ttext">Crecí con el volumen de los datos:
+        <div class="subline">
+          <span class="sunit"><span class="spill">bit</span></span><span class="sarrow">→</span>
+          <span class="sunit"><span class="spill">byte</span></span><span class="sarrow">→</span>
+          <span class="sunit"><span class="spill">MB</span></span><span class="sarrow">→</span>
+          <span class="sunit"><span class="spill">GB</span></span><span class="sarrow">→</span>
+          <span class="sunit"><span class="spill">TB</span></span>
+        </div>
+      </div></div>
       <div class="trow"><div class="tyear">Backends</div><div class="ttext">Bases relacionales, orientadas a objetos y a grafos.</div></div>
       <div class="trow"><div class="tyear">IA clásica</div><div class="ttext">Redes neuronales y machine learning.</div></div>
       <div class="trow"><div class="tyear">Deep learning</div><div class="ttext">Programación de tensores con PyTorch.</div></div>
